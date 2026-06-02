@@ -1,0 +1,65 @@
+<UserControl x:Class="ReservoirCalculator.Views.ComponentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая часть - Все комплектующие -->
+        <Grid Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Доступные комплектующие" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <DataGrid Grid.Row="1" ItemsSource="{Binding AllComponents}" 
+                      SelectedItem="{Binding SelectedComponent}"
+                      AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" Width="200"/>
+                    <DataGridTextColumn Header="Тип" Binding="{Binding Type}" Width="100"/>
+                    <DataGridTextColumn Header="Вес (кг)" Binding="{Binding Weight, StringFormat=F2}" Width="80"/>
+                    <DataGridTextColumn Header="Цена" Binding="{Binding Price, StringFormat=F2}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!-- Правая часть - Выбранные комплектующие -->
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Выбранные комплектующие" FontSize="14" FontWeight="Bold"/>
+
+            <ListBox Grid.Row="1" ItemsSource="{Binding SelectedComponents}" Margin="0,10,0,0"/>
+
+            <StackPanel Grid.Row="2" Margin="0,10,0,0" Spacing="5">
+                <TextBlock>
+                    <Run Text="Общий вес: "/>
+                    <Run Text="{Binding TotalComponentWeight, StringFormat=F2, Mode=OneWay}" Foreground="Blue" FontWeight="Bold"/>
+                    <Run Text="кг"/>
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Стоимость: "/>
+                    <Run Text="{Binding TotalComponentCost, StringFormat=F2, Mode=OneWay}" Foreground="Green" FontWeight="Bold"/>
+                    <Run Text="руб."/>
+                </TextBlock>
+            </StackPanel>
+
+            <Button Grid.Row="3" Content="Добавить" Command="{Binding AddComponentCommand}" 
+                    Padding="10" Margin="0,10,0,5" Background="#27AE60" Foreground="White"/>
+            <Button Grid.Row="4" Content="Стандартный набор" Command="{Binding LoadStandardCommand}" 
+                    Padding="10" Background="#3498DB" Foreground="White"/>
+        </Grid>
+    </Grid>
+</UserControl>
